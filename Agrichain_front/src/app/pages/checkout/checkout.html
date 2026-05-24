@@ -1,0 +1,105 @@
+<!-- Order Summary Header -->
+<div class="checkout-header">
+  <div class="brand-badge">
+    <span class="brand-icon">🌾</span>
+    <span class="brand-text">AgriChain Marketplace</span>
+  </div>
+  <h2 class="checkout-title">Order Summary</h2>
+  <p class="checkout-sub">Review your order before proceeding to payment</p>
+</div>
+
+<!-- Skeleton loader -->
+@if (!order) {
+  <div class="skeleton-card">
+    <div class="skel skel-title"></div>
+    <div class="skel skel-row"></div>
+    <div class="skel skel-row"></div>
+    <div class="skel skel-total"></div>
+  </div>
+}
+
+<!-- Order Card -->
+@if (order) {
+  <div class="order-card">
+
+    <!-- Meta row -->
+    <div class="order-meta">
+      <div class="meta-chip">
+        <span class="meta-label">Order ID</span>
+        <span class="meta-val">#{{ order.orderId }}</span>
+      </div>
+      <div class="meta-chip">
+        <span class="meta-label">Date</span>
+        <span class="meta-val">{{ order.orderDate | date:'dd MMM yyyy' }}</span>
+      </div>
+      <span class="status-pill" [class.confirmed]="order.orderStatus === 'CONFIRMED'">
+        {{ order.orderStatus }}
+      </span>
+    </div>
+
+    <!-- Line Items -->
+    <div class="line-items">
+      <div class="li-head">
+        <span>Item</span><span>Qty</span><span>Rate</span><span class="text-right">Amount</span>
+      </div>
+      @for (item of order.items; track item.cropName) {
+        <div class="li-row">
+          <span class="li-name">{{ item.cropName }}</span>
+          <span class="li-qty">{{ item.quantity }} {{ item.unit }}</span>
+          <span class="li-rate">₹{{ item.pricePerUnit | number:'1.2-2' }}</span>
+          <span class="li-amt">₹{{ item.subtotal | number:'1.2-2' }}</span>
+        </div>
+      }
+    </div>
+
+    <!-- Delivery strip -->
+    <div class="delivery-strip">
+      <span class="delivery-icon">📍</span>
+      <div class="delivery-info">
+        <p class="delivery-label">Delivering to</p>
+        <p class="delivery-addr">{{ order.deliveryAddress }}</p>
+      </div>
+      <div class="delivery-eta">
+        <p class="delivery-label">Est. Arrival</p>
+        <p class="eta-date">{{ order.estimatedDelivery }}</p>
+      </div>
+    </div>
+
+    <!-- Pricing breakdown -->
+    <div class="pricing">
+      <div class="price-row">
+        <span>Subtotal</span>
+        <span>₹{{ subtotal | number:'1.2-2' }}</span>
+      </div>
+      <div class="price-row fee-row">
+        <span>Platform Fee <span class="fee-badge">2%</span></span>
+        <span class="fee-amt">+ ₹{{ platformFee | number:'1.2-2' }}</span>
+      </div>
+      <div class="price-divider"></div>
+      <div class="price-row total-row">
+        <span>Grand Total</span>
+        <span class="grand-total">₹{{ grandTotal | number:'1.2-2' }}</span>
+      </div>
+    </div>
+
+    <!-- Farmer info -->
+    <div class="farmer-row">
+      <div class="farmer-avatar">{{ order.farmerName[0] }}</div>
+      <div>
+        <p class="farmer-label">Sourced from</p>
+        <p class="farmer-name">{{ order.farmerName }}</p>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- CTA -->
+<button class="proceed-btn" (click)="onProceed()" [disabled]="!order">
+  <span>Proceed to Pay</span>
+  @if (order) {
+    <span class="btn-amt">₹{{ grandTotal | number:'1.0-0' }}</span>
+  }
+  <span class="btn-arrow">→</span>
+</button>
+
+<p class="secure-note">🔒 256-bit SSL secured · All transactions are encrypted</p>

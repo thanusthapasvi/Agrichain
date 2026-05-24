@@ -1,0 +1,135 @@
+@if (state && state.resolution !== 'none') {
+
+  <!-- ═══ SUCCESS ═══ -->
+  @if (state.resolution === 'success') {
+    <div class="res-screen res-success">
+
+      <div class="check-wrap">
+        <!-- Confetti burst -->
+        @for (c of confetti; track c.x) {
+          <div
+            class="confetti-piece"
+            [style.left]="c.x + '%'"
+            [style.background]="c.color"
+            [style.border-radius]="c.shape"
+            [style.animation-delay]="c.delay + 's'"
+          ></div>
+        }
+        <svg viewBox="0 0 90 90" class="check-svg">
+          <circle cx="45" cy="45" r="40" fill="none" stroke="#10b981" stroke-width="4"
+            stroke-dasharray="251" stroke-dashoffset="251" class="ring-draw"/>
+          <path d="M25 45 L38 58 L65 30" fill="none" stroke="#10b981" stroke-width="5"
+            stroke-linecap="round" stroke-linejoin="round"
+            stroke-dasharray="70" stroke-dashoffset="70" class="tick-draw"/>
+        </svg>
+      </div>
+
+      <h2 class="res-title">Payment Successful!</h2>
+      <p class="res-sub">Your order has been placed and payment received</p>
+
+      <div class="res-card">
+        <div class="res-row">
+          <span>Transaction ID</span>
+          <span class="rv mono">#{{ state.transaction?.transactionId }}</span>
+        </div>
+        <div class="res-row">
+          <span>Order ID</span>
+          <span class="rv mono">#{{ state.transaction?.orderId }}</span>
+        </div>
+        <div class="res-row">
+          <span>Amount Paid</span>
+          <span class="rv green">₹{{ state.transaction?.transactionAmount | number:'1.2-2' }}</span>
+        </div>
+        <div class="res-row">
+          <span>Payment Method</span>
+          <span class="rv">{{ state.payment?.method }}</span>
+        </div>
+        <div class="res-row">
+          <span>Date &amp; Time</span>
+          <span class="rv">{{ state.payment?.paymentDate | date:'dd MMM yyyy, h:mm a' }}</span>
+        </div>
+      </div>
+
+      <div class="sync-banner sync-ok">
+        ✓ &nbsp;Stock updated via Market Service
+      </div>
+
+      <div class="res-actions">
+        <button class="btn-primary" (click)="newOrder.emit()">Place Another Order</button>
+        <button class="btn-secondary" (click)="viewHistory.emit()">View Transaction History</button>
+      </div>
+    </div>
+  }
+
+  <!-- ═══ SYNC FAILED ═══ -->
+  @if (state.resolution === 'sync_failed') {
+    <div class="res-screen res-warn">
+
+      <div class="warn-icon">⚠️</div>
+      <h2 class="res-title">Payment Received</h2>
+      <p class="res-sub">Payment successful but inventory sync encountered an issue</p>
+
+      <div class="res-card">
+        <div class="res-row">
+          <span>Transaction ID</span>
+          <span class="rv mono">#{{ state.transaction?.transactionId }}</span>
+        </div>
+        <div class="res-row">
+          <span>Status</span>
+          <span class="rv green">COMPLETED</span>
+        </div>
+        <div class="res-row">
+          <span>Amount</span>
+          <span class="rv">₹{{ state.transaction?.transactionAmount | number:'1.2-2' }}</span>
+        </div>
+      </div>
+
+      <div class="sync-banner sync-warn">
+        ⚠️ &nbsp;Inventory sync failed — your payment is safe. We'll retry automatically.
+      </div>
+
+      <div class="res-actions">
+        <button class="btn-warning" (click)="retrySync.emit()">Retry Sync Now</button>
+        <button class="btn-secondary" (click)="viewHistory.emit()">View My Orders</button>
+      </div>
+    </div>
+  }
+
+  <!-- ═══ PAYMENT FAILED ═══ -->
+  @if (state.resolution === 'payment_failed') {
+    <div class="res-screen res-fail">
+
+      <div class="fail-icon">✕</div>
+      <h2 class="res-title">Payment Failed</h2>
+
+      @if (state.errorReason) {
+        <p class="res-sub fail-reason">{{ state.errorReason }}</p>
+      } @else {
+        <p class="res-sub">Something went wrong. No charge was made to your account.</p>
+      }
+
+      <div class="res-card">
+        @if (state.transaction?.transactionId) {
+          <div class="res-row">
+            <span>Transaction ID</span>
+            <span class="rv mono">#{{ state.transaction?.transactionId }}</span>
+          </div>
+        }
+        <div class="res-row">
+          <span>Status</span>
+          <span class="rv red">FAILED</span>
+        </div>
+      </div>
+
+      <div class="sync-banner sync-fail">
+        ✕ &nbsp;No charge has been made to your account
+      </div>
+
+      <div class="res-actions">
+        <button class="btn-danger" (click)="retryPayment.emit()">Try Another Method</button>
+        <button class="btn-secondary" (click)="newOrder.emit()">Back to Orders</button>
+      </div>
+    </div>
+  }
+
+}

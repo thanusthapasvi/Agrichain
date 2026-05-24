@@ -1,0 +1,143 @@
+/* ── Base screen ────────────────────────────────────────────────────────── */
+.res-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+/* ── Animated checkmark ─────────────────────────────────────────────────── */
+.check-wrap {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  margin: 0 auto;
+}
+.check-svg { width: 90px; height: 90px; }
+.ring-draw { animation: drawRing 0.6s ease forwards; }
+.tick-draw { animation: drawTick 0.4s ease 0.5s forwards; }
+
+/* Confetti */
+.confetti-piece {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  top: 50%;
+  left: 50%;
+  animation: confettiBurst 0.9s ease forwards;
+  pointer-events: none;
+}
+
+/* ── Warning / Fail icons ───────────────────────────────────────────────── */
+.warn-icon { font-size: 64px; line-height: 1; }
+.fail-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #fef2f2;
+  border: 3px solid #fca5a5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: #dc2626;
+  font-weight: 800;
+}
+
+/* ── Titles ─────────────────────────────────────────────────────────────── */
+.res-title { font-size: 26px; font-weight: 800; margin: 0; }
+.res-success .res-title { color: #059669; }
+.res-warn    .res-title { color: #d97706; }
+.res-fail    .res-title { color: #dc2626; }
+
+.res-sub { font-size: 14px; color: #6b7280; margin: 0; }
+.fail-reason {
+  background: #fef2f2;
+  color: #b91c1c;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+/* ── Receipt card ───────────────────────────────────────────────────────── */
+.res-card {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  overflow: hidden;
+  text-align: left;
+}
+.res-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 18px;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 13px;
+  color: #6b7280;
+}
+.res-row:last-child { border-bottom: none; }
+.rv       { font-weight: 700; color: #111827; }
+.mono     { font-family: monospace; }
+.green    { color: #059669 !important; }
+.red      { color: #dc2626 !important; }
+
+/* ── Status banners ─────────────────────────────────────────────────────── */
+.sync-banner {
+  width: 100%;
+  padding: 13px 18px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sync-ok   { background: #d1fae5; color: #065f46; }
+.sync-warn { background: #fffbeb; color: #92400e; }
+.sync-fail { background: #fef2f2; color: #b91c1c; }
+
+/* ── Action buttons ─────────────────────────────────────────────────────── */
+.res-actions { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+
+.btn-primary {
+  background: linear-gradient(135deg, #059669, #047857);
+  color: #fff; border: none; border-radius: 14px;
+  padding: 15px; font-size: 15px; font-weight: 800;
+  cursor: pointer; width: 100%; font-family: inherit;
+  transition: all 0.2s;
+}
+.btn-primary:hover { transform: translateY(-1px); }
+
+.btn-secondary {
+  background: #f3f4f6; color: #374151; border: none;
+  border-radius: 14px; padding: 15px; font-size: 15px;
+  font-weight: 700; cursor: pointer; width: 100%; font-family: inherit;
+}
+
+.btn-warning {
+  background: #d97706; color: #fff; border: none;
+  border-radius: 14px; padding: 15px; font-size: 15px;
+  font-weight: 800; cursor: pointer; width: 100%; font-family: inherit;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  color: #fff; border: none; border-radius: 14px;
+  padding: 15px; font-size: 15px; font-weight: 800;
+  cursor: pointer; width: 100%; font-family: inherit;
+}
+
+/* ── Keyframes ──────────────────────────────────────────────────────────── */
+@keyframes drawRing {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes drawTick {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes confettiBurst {
+  0%   { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(calc(var(--cx, 40px)), calc(var(--cy, -40px))) rotate(720deg); opacity: 0; }
+}

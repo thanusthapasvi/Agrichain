@@ -1,0 +1,112 @@
+<!-- Header -->
+<div class="feed-header">
+  <div>
+    <h2 class="feed-title">Transaction History</h2>
+    <p class="feed-sub">All your payments and orders</p>
+  </div>
+  <button class="refresh-btn" (click)="load()">⟳ Refresh</button>
+</div>
+
+<!-- Chip filters -->
+<div class="chip-row">
+  @for (chip of chips; track chip) {
+    <button
+      class="chip"
+      [class.chip-active]="activeFilter() === chip"
+      (click)="setFilter(chip)"
+    >
+      {{ chip === 'ALL' ? 'All' : chip | titlecase }}
+      <span class="chip-count">{{ count(chip) }}</span>
+    </button>
+  }
+</div>
+
+<!-- Loading skeleton -->
+@if (loading()) {
+  <div class="skel-list">
+    @for (n of [1, 2, 3]; track n) {
+      <div class="skel-card">
+        <div class="skel skel-line"></div>
+        <div class="skel skel-short"></div>
+      </div>
+    }
+  </div>
+}
+
+<!-- Empty state -->
+@if (!loading() && filtered().length === 0) {
+  <div class="empty-state">
+    <span class="empty-icon">📋</span>
+    <p>No {{ activeFilter() === 'ALL' ? '' : activeFilter().toLowerCase() + ' ' }}transactions found</p>
+  </div>
+}
+
+<!-- Transaction cards -->
+@if (!loading()) {
+  <div class="tx-list">
+    @for (tx of filtered(); track tx.transactionId) {
+      <div
+        class="tx-card"
+        [class.tx-expanded]="expandedId() === tx.transactionId"
+        (click)="toggle(tx.transactionId)"
+      >
+        <!-- Summary row -->
+        <div class="tx-main">
+          <div
+            class="tx-icon"
+            [class.icon-ok]="tx.transactionStatus === 'COMPLETED'"
+            [class.icon-fail]="tx.transactionStatus === 'FAILED'"
+            [class.icon-pending]="tx.transactionStatus === 'PENDING'"
+          >
+            @if (tx.transactionStatus === 'COMPLETED') { ✓ }
+            @else if (tx.transactionStatus === 'FAILED') { ✕ }
+            @else { ⏳ }
+          </div>
+
+          <div class="tx-info">
+            <p class="tx-label">Order #{{ tx.orderId }}</p>
+            <p class="tx-date">{{ tx.transactionDate | date:'dd MMM yyyy, h:mm a' }}</p>
+          </div>
+
+          <div class="tx-right">
+            <p class="tx-amount">₹{{ tx.transactionAmount | number:'1.2-2' }}</p>
+            <span
+              class="status-badge"
+              [class.badge-ok]="tx.transactionStatus === 'COMPLETED'"
+              [class.badge-fail]="tx.transactionStatus === 'FAILED'"
+              [class.badge-pending]="tx.transactionStatus === 'PENDING'"
+            >
+              <span class="badge-dot"></span>
+              {{ tx.transactionStatus }}
+            </span>
+          </div>
+
+          <span class="tx-chevron">{{ expandedId() === tx.transactionId ? '▲' : '▼' }}</span>
+        </div>
+
+        <!-- Expanded breakdown -->
+        @if (expandedId() === tx.transactionId) {
+          <div class="tx-details">
+            <div class="detail-row">
+              <span>Transaction ID</span>
+              <span class="dv mono">#{{ tx.transactionId }}</span>
+            </div>
+            <div class="detail-row">
+              <span>Base Amount</span>
+              <span class="dv">₹{{ baseAmount(tx.transactionAmount) | number:'1.2-2' }}</span>
+            </div>
+            <div class="detail-row">
+              <span>Platform Fee (2%)</span>
+              <span class="dv fee">₹{{ platformFee(tx.transactionAmount) | number:'1.2-2' }}</span>
+            </div>
+            <div class="detail-divider"></div>
+            <div class="detail-row">
+              <span>Total Charged</span>
+              <span class="dv strong">₹{{ tx.transactionAmount | number:'1.2-2' }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

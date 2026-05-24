@@ -1,0 +1,39 @@
+<div class="page-wrap">
+
+  <!-- ── CHECKOUT VIEW ── -->
+  @if (view() === 'checkout') {
+    <div class="view-fade">
+      <app-checkout
+        [order]="order()"
+        (proceedToPay)="onProceedToPay($event)"
+      />
+      <app-payment-method
+        [visible]="showPaymentSheet()"
+        [grandTotal]="pendingGrandTotal()"
+        (confirmed)="onPaymentConfirmed($event)"
+        (closed)="showPaymentSheet.set(false)"
+      />
+    </div>
+  }
+
+  <!-- ── STEPPER VIEW ── -->
+  @if (view() === 'stepper') {
+    <div class="view-fade">
+      <app-transaction-stepper />
+    </div>
+  }
+
+  <!-- ── RESOLUTION VIEW ── -->
+  @if (view() === 'resolution') {
+    <div class="view-fade">
+      <app-resolution
+        [state]="txState.state()"
+        (retryPayment)="onRetryPayment()"
+        (retrySync)="onRetrySync()"
+        (newOrder)="onNewOrder()"
+        (viewHistory)="router.navigate(['/dashboard/trader/transaction-history'])"
+      />
+    </div>
+  }
+
+</div>

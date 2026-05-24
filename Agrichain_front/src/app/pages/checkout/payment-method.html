@@ -1,0 +1,69 @@
+@if (visible) {
+  <div class="sheet-overlay" (click)="onClose()">
+    <div class="sheet" (click)="$event.stopPropagation()">
+
+      <div class="sheet-drag"></div>
+
+      <!-- Header -->
+      <div class="sheet-header">
+        <div>
+          <h3 class="sheet-title">Choose Payment Method</h3>
+          <p class="sheet-sub">🔒 Secured by 256-bit encryption</p>
+        </div>
+        <button class="sheet-close" (click)="onClose()">✕</button>
+      </div>
+
+      <!-- Sticky total -->
+      <div class="total-pill">
+        <span class="tp-label">Total Payable</span>
+        <span class="tp-amt">₹{{ grandTotal | number:'1.0-0' }}</span>
+      </div>
+
+      <!-- Method cards -->
+      <div class="methods-list">
+        @for (m of methods; track m.type) {
+          <button
+            class="method-card"
+            [class.selected]="selected === m.type"
+            (click)="select(m.type)"
+          >
+            <div class="m-icon">{{ m.icon }}</div>
+            <div class="m-info">
+              <div class="m-label">
+                {{ m.label }}
+                @if (m.tag) {
+                  <span class="m-tag" [class]="m.tagClass ?? ''">{{ m.tag }}</span>
+                }
+              </div>
+              <div class="m-sub">{{ m.subtitle }}</div>
+            </div>
+            @if (selected === m.type) {
+              <div class="m-check">✓</div>
+            }
+          </button>
+        }
+      </div>
+
+      <!-- Footer -->
+      <div class="sheet-footer">
+        <div class="sel-preview">
+          @if (getSelected(); as sel) {
+            <span class="sel-icon">{{ sel.icon }}</span>
+            <span>{{ sel.label }}</span>
+          } @else {
+            <span class="sel-placeholder">← Select a payment method</span>
+          }
+        </div>
+        <button class="confirm-btn" (click)="onConfirm()" [disabled]="!selected">
+          @if (selected) {
+            Confirm &amp; Pay ₹{{ grandTotal | number:'1.0-0' }}
+          } @else {
+            Select a Method
+          }
+          <span class="lock-icon">🔒</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+}

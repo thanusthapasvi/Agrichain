@@ -1,0 +1,73 @@
+<!-- Header -->
+<div class="stepper-header">
+  <div class="sp-icon" [class.spin]="isProcessing">
+    @if (txState.resolution() === 'success') { 🎉 }
+    @else if (txState.resolution() === 'payment_failed') { ❌ }
+    @else { ⚙️ }
+  </div>
+  <div>
+    <p class="sp-title">{{ headerText }}</p>
+    @if (isProcessing) {
+      <p class="sp-sub">Please keep this window open…</p>
+    }
+  </div>
+</div>
+
+<!-- 7-Step List -->
+<div class="steps-list">
+  @for (step of txState.state().steps; track step.step; let i = $index; let last = $last) {
+    <div
+      class="step-item"
+      [class.step-active]="step.status === 'active'"
+      [class.step-done]="step.status === 'done'"
+      [class.step-error]="step.status === 'error'"
+      [class.step-pending]="step.status === 'pending'"
+    >
+      <!-- Connector line -->
+      @if (!last) {
+        <div class="step-connector" [class.connector-done]="step.status === 'done'"></div>
+      }
+
+      <!-- Step icon -->
+      <div class="step-icon">
+        @switch (step.status) {
+          @case ('pending') { <span class="icon-dot">○</span> }
+          @case ('active')  { <span class="icon-pulse"></span> }
+          @case ('done')    { <span class="icon-check">✓</span> }
+          @case ('error')   { <span class="icon-error">✕</span> }
+        }
+      </div>
+
+      <!-- Step content -->
+      <div class="step-body">
+        <div>
+          <p class="step-label" [class]="'label-' + step.status">{{ step.label }}</p>
+          <p class="step-api"   [class.api-active]="step.status === 'active'">{{ step.apiLabel }}</p>
+        </div>
+        <div class="step-meta">
+          @if (step.timestamp) {
+            <span class="step-ts">{{ step.timestamp }}</span>
+          }
+          @if (step.status === 'active') {
+            <span class="live-badge">Live</span>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>
+
+<!-- Polling warning (shows after 5 min) -->
+@if (showPollingWarning) {
+  <div class="poll-warning">
+    ⏱️ Payment is taking longer than usual. Still waiting on gateway…
+  </div>
+}
+
+<!-- Transaction ID bar 
+@if (txState.state().transaction; as tx) {
+  <div class="txn-id-bar">
+    <span class="txn-id-label">Transaction ID</span>
+    <span class="txn-id-val">#{{ tx.transactionId }}</span>
+  </div>
+} -->
