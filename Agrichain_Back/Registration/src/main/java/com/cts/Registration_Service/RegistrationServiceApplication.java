@@ -1,9 +1,16 @@
 package com.cts.Registration_Service;
 
+import com.cts.Registration_Service.dao.UserRepo;
+import com.cts.Registration_Service.entity.Users;
+import com.cts.Registration_Service.enums.UserRole;
+import com.cts.Registration_Service.enums.UserStatus;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -16,7 +23,7 @@ public class RegistrationServiceApplication {
 
 	 //2. Added PasswordEncoder as a parameter here
 //	@Bean
-//	CommandLineRunner addUsers(UserRepo userRepo, PasswordEncoder passwordEncoder) {
+//    CommandLineRunner addUsers(UserRepo userRepo, PasswordEncoder passwordEncoder) {
 //		return args -> {
 //			// 1. Farmer
 //			Users farmer = new Users();

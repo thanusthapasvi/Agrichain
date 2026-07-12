@@ -10,7 +10,6 @@
     @if(isLoading()) {
       <loader />
     } @else {
-<<<<<<< HEAD
       <!-- Added ngIf check to hide cards where quantity is 0 -->
       <ng-container *ngFor="let item of cropLists()">
         <div class="data-card" *ngIf="item.quantity > 0">
@@ -52,20 +51,20 @@
             <div class="buy-qty-row">
               <label class="qty-label">Qty (kg):</label>
               <div class="qty-stepper" style="display: flex; align-items: center; gap: 8px;">
-                <button 
-                  type="button" 
-                  class="qty-btn" 
+                <button
+                  type="button"
+                  class="qty-btn"
                   (click)="decreaseQty(item, $event)"
                   [disabled]="(item['buyQty'] || 10) <= 1"
                   style="padding: 4px 10px; cursor: pointer;">-</button>
-                
+
                 <span class="qty-display" style="min-width: 30px; text-align: center; font-weight: bold;">
                   {{ item['buyQty'] ?? 10 }}
                 </span>
-                
-                <button 
-                  type="button" 
-                  class="qty-btn" 
+
+                <button
+                  type="button"
+                  class="qty-btn"
                   (click)="increaseQty(item, $event)"
                   [disabled]="(item['buyQty'] || 10) >= item.quantity"
                   style="padding: 4px 10px; cursor: pointer;">+</button>
@@ -87,46 +86,4 @@
       </div>
     }
   </div>
-=======
-    <div class="data-card" *ngFor="let item of cropLists()">
-      <div class="card-header-info">
-        <span class="id-tag">#{{item.listingId}}</span>
-        <span class="status-tag">VALIDATED</span>
-      </div>
-
-      <div class="card-content">
-        <h3 class="crop-name">{{item.cropType}}</h3>
-
-        <div class="detail-item">
-          <span class="detail-label">Farmer ID:</span>
-          <span class="detail-value">F-{{item.farmerId}}</span>
-        </div>
-
-        <div class="detail-item">
-          <span class="detail-label">Location:</span>
-          <span class="detail-value">{{item.location}}</span>
-        </div>
-
-        <div class="detail-item">
-          <span class="detail-label">Available:</span>
-          <span class="detail-value">{{item.quantity}} Kgs</span>
-        </div>
-
-        <div class="detail-item">
-          <span class="detail-label">Contact:</span>
-          <span class="detail-value">{{item.farmerNumber}}</span>
-        </div>
-
-        <div class="price-highlight-box">
-          <span class="price-label">Price:</span>
-          <span class="price-amount">₹{{item.price}} / kg</span>
-        </div>
-      </div>
-    </div>
-    <div class="empty-state" *ngIf="cropLists().length === 0">
-      <p>No crops are currently available.</p>
-    </div>
-  }
-</div>
->>>>>>> 3a69c7932c51cb5bfa775fb20c2419cdcd61bcaa
 </div>
