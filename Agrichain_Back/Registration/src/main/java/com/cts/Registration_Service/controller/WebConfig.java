@@ -1,7 +1,6 @@
 package com.cts.Registration_Service.controller;
 
 // THIS IMPORT IS CRITICAL
-import com.cts.Registration_Service.service.AuditInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

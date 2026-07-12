@@ -1,6 +1,5 @@
 package com.cts.Registration_Service.dao;
 
-import com.cts.Registration_Service.dto.response.FarmerResponseDTO;
 import com.cts.Registration_Service.entity.Farmer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -3,7 +3,6 @@ package com.cts.Registration_Service.dao;
 import com.cts.Registration_Service.dto.response.UserResponseDTO;
 import com.cts.Registration_Service.entity.Users;
 import com.cts.Registration_Service.enums.UserRole;
-import com.cts.Registration_Service.enums.UserStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

@@ -2,7 +2,6 @@ package com.cts.Registration_Service.entity;
 
 import com.cts.Registration_Service.enums.DocType;
 import com.cts.Registration_Service.enums.VerificationStatus;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

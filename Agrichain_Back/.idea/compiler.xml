@@ -2,21 +2,28 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
         <module name="registry" />
+        <module name="eureka" />
       </profile>
-      <profile name="Annotation profile for Registration" enabled="true">
+      <profile name="Annotation profile for report-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.32/lombok-1.18.32.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
         </processorPath>
-        <module name="Registration" />
+        <module name="audit-compliance" />
+        <module name="report-service" />
+        <module name="croplisting-order" />
+        <module name="notification-service" />
+        <module name="report-service (1)" />
+        <module name="croplisting-service" />
       </profile>
       <profile name="Annotation profile for transaction-payment" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -28,26 +35,15 @@
         <module name="subsidy" />
         <module name="transaction-payment" />
       </profile>
-      <profile name="Annotation profile for notification-service" enabled="true">
+      <profile name="Annotation profile for registration-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
-        <module name="report-service" />
-        <module name="notification-service" />
-      </profile>
-      <profile name="Annotation profile for croplisting-order-service" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
-        </processorPath>
-        <module name="report-service (1)" />
-        <module name="croplisting-service" />
+        <module name="Registration" />
       </profile>
     </annotationProcessing>
   </component>
@@ -55,7 +51,10 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Registration" options="-parameters" />
       <module name="api-gateway" options="-parameters" />
+      <module name="audit-compliance" options="-parameters" />
+      <module name="croplisting-order" options="-parameters" />
       <module name="croplisting-service" options="-parameters" />
+      <module name="eureka" options="-parameters" />
       <module name="notification-service" options="-parameters" />
       <module name="registry" options="-parameters" />
       <module name="report-service" options="-parameters" />

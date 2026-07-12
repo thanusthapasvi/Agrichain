@@ -1,4 +1,4 @@
-package com.cts.Registration_Service.service;
+package com.cts.Registration_Service.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

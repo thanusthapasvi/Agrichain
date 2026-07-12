@@ -3,7 +3,6 @@ package com.cts.Registration_Service.service;
 import com.cts.Registration_Service.dao.AuditLogRepo;
 import com.cts.Registration_Service.dao.FarmerDocumentRepo;
 import com.cts.Registration_Service.dao.FarmerRepo;
-import com.cts.Registration_Service.entity.AuditLog;
 import com.cts.Registration_Service.entity.Farmer;
 import com.cts.Registration_Service.entity.FarmerDocument;
 import com.cts.Registration_Service.enums.DocType;
@@ -20,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.nio.file.*;
 import java.util.List;
 
 @Service

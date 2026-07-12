@@ -4,7 +4,6 @@ import com.cts.Registration_Service.client.NotificationClient;
 import com.cts.Registration_Service.dao.FarmerDocumentRepo;
 import com.cts.Registration_Service.dto.NotificationDTO;
 import com.cts.Registration_Service.dto.response.FarmerDocumentResponseDTO;
-import com.cts.Registration_Service.dto.response.FarmerResponseDTO;
 import com.cts.Registration_Service.entity.FarmerDocument;
 import com.cts.Registration_Service.enums.DocType;
 import com.cts.Registration_Service.enums.NotificationCategory;
